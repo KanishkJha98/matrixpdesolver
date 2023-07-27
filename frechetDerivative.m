@@ -1,4 +1,20 @@
-function J = frechetDerivative(U,CH,CV,DH,DV,dt)
+function [J] = frechetDerivative(U,CH,CV,DH,DV,dt)
+% Standard approach to computing the Frechet derivative of the
+% nonlinear matrix equation
+%  function [J] = frechetDemoDerivative( U,CH,CV,DH,DV,dt )
+% Input: U - The matrix containing the unknown variables at every node
+%            point
+%        CH - The horizontal convective matrix corresponding to
+%             discretisation of convective term in y-direction
+%        CV - The vertical convective matrix corresponding to
+%             discretisation of convective term in x-direction
+%        DH - The horizontal diffusion matrix corresponding to
+%             discretisation of the diffusive term in y-direction
+%        DV - The vertical diffusion matrix corresponding to discretisation
+%             of the diffusive term in x-direction
+%        dt - The incremental time step value
+% Output: J - The Frechet Derivative equation, in vectorised form
+
 n = size(U,1);    
 %Create the identity matrix of conforming dimensions
 I = speye(n,n);
