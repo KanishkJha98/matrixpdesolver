@@ -1,6 +1,6 @@
 function [CV] = verticalConvectiveMatrix(n,dx)
 
-% 5-point(or 3rd order accurate) central discretisation scheme for the
+% 5-point(or 4th order accurate) central discretisation scheme for the
 % discretisation of the convective term in the x-direction. The first and last
 % columns are 0 to account for boundary nodes.
 % function [CV] = verticalConvectiveMatrix(n,dx)

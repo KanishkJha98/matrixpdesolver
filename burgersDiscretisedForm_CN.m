@@ -1,13 +1,15 @@
-function [FU] = burgersDiscretisedForm_CN(U,Uold,CH,CV,DH,DV,dt)
+function [FU] = burgersDiscretisedForm_CN(U,Unew,Uold,CH,CV,DH,DV,dt)
 
 % Store the discretised form of the Burgers' equation as a nonlinear matrix
 % equations, for the Crank-Nicolson scheme. The boundary values are set to 
 % 0 after we use them in the equation, as we do not necessarily need the 
 % data at the boundary nodes for any form of computation. They exist merely 
 % to ensure that the dimensions of the coefficient matrices conform.
-% function [FU] = burgersDiscretisedForm_CN(U,Uold,CH,CV,DH,DV,dt)
+% function [FU] = burgersDiscretisedForm_CN(U,Unew,Uold,CH,CV,DH,DV,dt)
 % Input: U - The matrix containing the unknown variables at every node
 %            point
+%        Unew - The matrix containing the initial guess for U at next time
+%        step
 %        Uold - The matrix containing the (known) values of U at current
 %        time step
 %        CH - The horizontal convective matrix corresponding to
@@ -24,12 +26,12 @@ function [FU] = burgersDiscretisedForm_CN(U,Uold,CH,CV,DH,DV,dt)
 %              each boundary node.
 
 n = size(U,1);
-FU = (2/dt) * U - (2/dt) * Uold + U .* (U * CV) + U .* (CH * U) + U * DV + ...
+FU = (2/dt) * U - (2/dt) * Unew + U .* (U * CV) + U .* (CH * U) + U * DV + ...
     DH * U + Uold .* (Uold * CV) + Uold .* (CH * Uold) + Uold * DV + DH * Uold;
 %Set boundary values of FU equal to 0(can
 %parallelise)
-FU(1,1:n) = U(1,1:n)-Uold(1,1:n);
-FU(2:n-1,1:n-1:n) = U(2:n-1,1:n-1:n)-Uold(2:n-1,1:n-1:n);
-FU(n,1:n) = U(n,1:n)-Uold(n,1:n);
+FU(1,1:n) = U(1,1:n)-Unew(1,1:n);
+FU(2:n-1,1:n-1:n) = U(2:n-1,1:n-1:n)-Unew(2:n-1,1:n-1:n);
+FU(n,1:n) = U(n,1:n)-Unew(n,1:n);
 
 end

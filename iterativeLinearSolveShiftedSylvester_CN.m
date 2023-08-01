@@ -27,21 +27,20 @@ function [H] = iterativeLinearSolveShiftedSylvester_CN( U,CH,CV,DH,DV,D,V,dt,FU,
 % Output: H - The final solution of H or delta increment to U
 
 n = size(U,1);
-%Ensure H and H0 are not initially 0, as this will lead to the convergence
-%check being successful instantly.
-H = rand(n,n);
+%Set initial guess to random values
 H0 = rand(n,n);
+H = zeros(n,n);
 A1 = (2/dt) * speye(n,n);
 A2 = sparse(CH * U);
 A3 = sparse(U * CV);
 it=0;
-RHS = FU - H0 .* A2 - U .* (CH * H0) - H0 * A3 - U .* (H0*CV);
+RHS = FU - H0 .* A2 - U .* (CH * H0) - H0 .* A3 - U .* (H0*CV);
 Resi = (A1+DH)*H + H*DV - RHS;
 while (it < maxIt && norm(Resi,"fro") > linTol)
     it=it+1;
     H = sylvesterSolver(A1+DH,D,V,RHS);
     H0 = H;
-    RHS = FU - H0 .* A2 - U .* (CH * H0) - H0 * A3 - U .* (H0*CV);
+    RHS = FU - H0 .* A2 - U .* (CH * H0) - H0 .* A3 - U .* (H0*CV);
     Resi = (A1+DH)*H + H*DV - RHS;
 end
 fprintf("%d\n",it);

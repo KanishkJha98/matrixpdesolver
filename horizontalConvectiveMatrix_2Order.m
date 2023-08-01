@@ -10,8 +10,8 @@ function [CH] = horizontalConvectiveMatrix_2Order(n,dy)
 %              the discretisation scheme for convective term in y-direction
 
 i = [2:n-1 2:n-1];
-j = [1:n-2 3:n];
-v = [repelem(-(1/(2*dy)),n-2) repelem((1/(2*dy)),n-2)];
+j = [1:n-2 2:n-1];
+v = [repelem(-(1/(dy)),n-2) repelem((1/(dy)),n-2)];
 CH = sparse(i,j,v,n,n);
 
 end

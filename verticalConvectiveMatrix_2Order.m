@@ -10,8 +10,8 @@ function [CV] = verticalConvectiveMatrix_2Order(n,dx)
 %              the discretisation scheme for convective term in x-direction
 
 j = [2:n-1 2:n-1];
-i = [1:n-2 3:n];
-v = [repelem(-(1/(2*dx)),n-2) repelem((1/(2*dx)),n-2)];
+i = [1:n-2 2:n-1];
+v = [repelem(-(1/(dx)),n-2) repelem((1/(dx)),n-2)];
 CV = sparse(i,j,v,n,n);
 
 end

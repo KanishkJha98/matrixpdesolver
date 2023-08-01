@@ -1,4 +1,4 @@
-function [H] = iterativeLinearSolveExperimental( U,CH,CV,DH,DV,dt,FU,maxIt )
+function [H] = iterativeLinearSolveExperimental( U,CH,CV,DH,DV,dt,FU,linTol,maxIt )
 
 %An experimental solver algorithm which follows a splitting-based approach
 % to solve the Frechet derivative equation but does so by multiplying 
@@ -18,15 +18,16 @@ function [H] = iterativeLinearSolveExperimental( U,CH,CV,DH,DV,dt,FU,maxIt )
 %        dt - The incremental time step value
 %        FU - The R.H.S of the equation, which is just the nonlinear matrix
 %        function that is to be finally computed
+%        linTol - The allowed tolerance limit 
 %        maxIt - maximum allowed number of iterations
 % Output: H - The final solution of H or delta increment to U 
 
 n = size(U,1);
-linTol = 1e-7;
 omega = 0.5;
 
+% Set initial guess to random values
+H0 = rand(n,n);
 H = zeros(n,n);
-H0 = zeros(n,n);
 
 A1 = (1/dt) * speye(n,n);
 A2 = sparse(CH * U);

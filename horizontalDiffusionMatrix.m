@@ -1,9 +1,9 @@
 function [DH] = horizontalDiffusionMatrix(n,dy,Re)
 
-% 5-point(3 order)central discretisation scheme for the discretisation
+% 5-point(4th order)central discretisation scheme for the discretisation
 % of the diffusive term in the y-direction.The first and last rows are 0
 % account for boundary nodes.
-% function [DH] = verticalDiffusionMatrix_2Order(n,dy,Re)
+% function [DH] = verticalDiffusionMatrix(n,dy,Re)
 % Input: n - The size of one dimension of the (square) matrix
 %        dy - The size of the node spacing for y-axis, where dy = y(i+1) - y(i)
 %        Re - The Reynold's number(reciprocal of the diffusion coefficient)

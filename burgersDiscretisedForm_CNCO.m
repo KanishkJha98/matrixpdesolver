@@ -1,15 +1,17 @@
-function [FU] = burgersDiscretisedForm(U,Unew,CH,CV,DH,DV,dt)
+function [FU] = burgersDiscretisedForm_CNCO(U,Unew,Uold,CH,CCH,CV,CCV,DH,DV,dt)
 
 % Store the discretised form of the Burgers' equation as a nonlinear matrix
-% equations. The boundary values are set to 0 after we use them in the equation,
-% as we do not necessarily need the data at the boundary nodes for any form
-% of computation. They exist merely to ensure that the dimensions of the
-% coefficient matrices conform.
-% function [FU] = burgersDiscretisedForm(U,Unew,CH,CV,DH,DV,dt)
+% equations, for the Crank-Nicolson scheme. The boundary values are set to 
+% 0 after we use them in the equation, as we do not necessarily need the 
+% data at the boundary nodes for any form of computation. They exist merely 
+% to ensure that the dimensions of the coefficient matrices conform.
+% function [FU] = burgersDiscretisedForm_CN(U,Unew,Uold,CH,CV,DH,DV,dt)
 % Input: U - The matrix containing the unknown variables at every node
 %            point
 %        Unew - The matrix containing the initial guess for U at next time
 %        step
+%        Uold - The matrix containing the (known) values of U at current
+%        time step
 %        CH - The horizontal convective matrix corresponding to
 %             discretisation of convective term in y-direction
 %        CV - The vertical convective matrix corresponding to
@@ -24,8 +26,8 @@ function [FU] = burgersDiscretisedForm(U,Unew,CH,CV,DH,DV,dt)
 %              each boundary node.
 
 n = size(U,1);
-FU = (1/dt) * U - (1/dt) * Unew + U .* (U * CV) + U .* (CH * U) + U * DV + DH * U;
-
+FU = (2/dt) * U - (2/dt) * Unew + (U*CCV) .* (U * CV) + (CCH*U) .* (CH * U) + U * DV + ...
+    DH * U + (Uold*CCV) .* (Uold * CV) + (CCH*Uold) .* (CH * Uold) + Uold * DV + DH * Uold;
 %Set boundary values of FU equal to 0(can
 %parallelise)
 FU(1,1:n) = U(1,1:n)-Unew(1,1:n);

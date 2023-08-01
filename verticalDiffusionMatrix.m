@@ -1,6 +1,6 @@
 function [DV] = verticalDiffusionMatrix(n,dx,Re)
 
-% 5-point(or 3rd Order) central discretisation scheme for discretisation
+% 5-point(or 4th Order) central discretisation scheme for discretisation
 % of the diffusive term in the x-direction. The first and last columns are 0
 % to account for boundary nodes.
 % function [DV] = verticalDiffusionMatrix(n,dx,Re)

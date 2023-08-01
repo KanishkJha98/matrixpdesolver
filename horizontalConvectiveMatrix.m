@@ -1,9 +1,9 @@
 function [CH] = horizontalConvectiveMatrix(n,dy)
 
-%5-point(3 order) central discretisation scheme for discretisation of
+%5-point(4th order) central discretisation scheme for discretisation of
 %convective term in y-direction.The top and bottom rows are 0
 % to account for boundary nodes.
-% function [CH] = horizontalConvectiveMatrix_2Order(n,dy)
+% function [CH] = horizontalConvectiveMatrix(n,dy)
 % Input: n - The size of one dimension of the (square) matrix
 %        dy - The size of the node spacing for y-axis, where dy = y(i+1) - y(i)
 % Output: CH - A coefficient matrix that multiplies with U from the left to represent
