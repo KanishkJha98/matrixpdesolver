@@ -34,8 +34,8 @@ tic
 % Compute eigendecomposition of DV to use for the Shifted Linear System
 % solver for the Sylvester equation (COMMENT THE NEXT TWO CODE LINES FOR
 %OTHER SOLVERS AS THIS WILL CONSUME TIME UNNECESSARILY)
-% [V,D] = eig(full(DV));
-% D = sparse(diag(D));
+[V,D] = eig(full(DV));
+D = sparse(diag(D));
 
 %Total number of linear iterations
 lit = 0;
@@ -55,7 +55,7 @@ for k=1:nt
     fprintf("%f\n",t);
     [itlt,it,U,FU] = newtonSys( @(U)burgersDiscretisedForm_CN(U,Unew,Uold,CH,CV,DH,DV,dt), ...
          Unew, 1e-10, 30, ...
-         @(U,FU)iterativeLinearSolveMatlabSylvester_CN(U,CH,CV,DH,DV,dt,FU,1e-10,100) );
+         @(U,FU)iterativeLinearSolveShiftedSylvester_CN(U,CH,CV,DH,DV,D,V,dt,FU,1e-10,100) );
     Unew = U;
     Uold = Unew;
     lit=lit+itlt;
